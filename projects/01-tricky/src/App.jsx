@@ -2,22 +2,13 @@ import confetti from "canvas-confetti"
 import { Square } from "./components/Square"
 import { TURNS } from "./constants"
 import { checkEndGame, checkWinner } from "./logic/board"
-import { useState } from "react"
 import { WinnerModal } from "./components/WinnerModal"
 import { removeGame, savedGame } from "./storage/storage"
+import { useTricky } from "./hooks/useTricky"
+
 
 function App() {
-  const [board, setBoard] = useState(() => {
-    const boardFromStorage = window.localStorage.getItem('board')
-    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
-  })
-
-  const [turn, setTurn] = useState(() => {
-    const turnFromStorage = window.localStorage.getItem('turn')
-    return turnFromStorage ?? TURNS.X
-  })
-
-  const [winner, setWinner] = useState(null)
+  const { board, turn, winner, setBoard, setTurn, setWinner } = useTricky()
 
   const resetGame = () => {
     setBoard(Array(9).fill(null))
